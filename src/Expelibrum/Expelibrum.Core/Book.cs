@@ -4,28 +4,26 @@ using System.Text;
 
 namespace Expelibrum.Core
 {
-    public class AuthorsItem
+
+    public class Book
     {
         public string url { get; set; }
-        public string name { get; set; }
+        public string key { get; set; }
+        public string title { get; set; }
+        public Author[] authors { get; set; }
+        public int number_of_pages { get; set; }
+        public Identifiers identifiers { get; set; }
+        public Publisher[] publishers { get; set; }
+        public string publish_date { get; set; }
+        public Subject[] subjects { get; set; }
+        public Cover cover { get; set; }
     }
 
     public class Identifiers
     {
-        public List<string> isbn_10 { get; set; }
-        public List<string> isbn_13 { get; set; }
-        public List<string> openlibrary { get; set; }
-    }
-
-    public class PublishersItem
-    {
-        public string name { get; set; }
-    }
-
-    public class SubjectsItem
-    {
-        public string name { get; set; }
-        public string url { get; set; }
+        public string[] isbn_10 { get; set; }
+        public string[] isbn_13 { get; set; }
+        public string[] openlibrary { get; set; }
     }
 
     public class Cover
@@ -35,17 +33,21 @@ namespace Expelibrum.Core
         public string large { get; set; }
     }
 
-    public class Book
-{
+    public class Author
+    {
         public string url { get; set; }
-        public string key { get; set; }
-        public string title { get; set; }
-        public List<AuthorsItem> authors { get; set; }
-        public int number_of_pages { get; set; }
-        public Identifiers identifiers { get; set; }
-        public List<PublishersItem> publishers { get; set; }
-        public string publish_date { get; set; }
-        public List<SubjectsItem> subjects { get; set; }
-        public Cover cover { get; set; }
+        public string name { get; set; }
     }
+
+    public class Publisher
+    {
+        public string name { get; set; }
+    }
+
+    public class Subject
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
 }

@@ -1,5 +1,6 @@
-﻿using System.Net.Http;
-using System.Text.Json;
+﻿using Newtonsoft.Json.Linq;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Expelibrum.Core
@@ -17,7 +18,7 @@ namespace Expelibrum.Core
                 var response = await client.GetAsync(url);
                 string json = await response.Content.ReadAsStringAsync();
 
-                return JsonSerializer.Deserialize<Book>(json);
+                return JObject.Parse(json)?.Properties()?.First()?.Value?.ToObject<Book>();
             }
         }
     }
