@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Expelibrum.UI
 {
@@ -20,9 +8,41 @@ namespace Expelibrum.UI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string originDirectory;
+        private string targetDirectory;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void BrowseOrigin_Click(object sender, RoutedEventArgs e)
+        {
+            originDirectory = SelectDirectory();
+            OriginTextBox.Text = originDirectory;
+        }
+
+        private void BrowseTarget_Click(object sender, RoutedEventArgs e)
+        {
+            targetDirectory = SelectDirectory();
+            TargetTextBox.Text = targetDirectory;
+        }
+
+        private void Go_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private string SelectDirectory()
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                return dialog.FileName;
+            }
+
+            return string.Empty;
         }
     }
 }
