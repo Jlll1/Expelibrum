@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Expelibrum.Model;
 
-namespace Expelibrum.Core
+namespace Expelibrum.Services
 {
-    public class IsbnHelper
+    public class OpenLibraryApiService : IIsbnService
     {
         private const string ENDPOINT = @"https://openlibrary.org/api/books?bibkeys={0}&jscmd=data&format=json";
 
-        public static async Task<Book> GetBookInfo(string isbn)
+        public async Task<Book> GetBookFromIsbn(string isbn)
         {
             string url = string.Format(ENDPOINT, isbn);
 

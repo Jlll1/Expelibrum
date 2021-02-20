@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Expelibrum.Core
+﻿namespace Expelibrum.Model
 {
 
     public class Book
