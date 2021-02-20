@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Expelibrum.Core
+namespace Expelibrum.Services
 {
     public class PDFUtils
     {
