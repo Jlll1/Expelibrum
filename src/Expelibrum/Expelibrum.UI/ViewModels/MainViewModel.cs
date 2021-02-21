@@ -2,11 +2,11 @@
 {
     public class MainViewModel
     {
-        public IDirectoryViewModel DirectoryViewModel { get; }
+        public IProcessViewModel ProcessViewModel { get; }
 
-        public MainViewModel(IDirectoryViewModel directoryViewModel)
+        public MainViewModel(IProcessViewModel processViewModel)
         {
-            DirectoryViewModel = directoryViewModel;
+            ProcessViewModel = processViewModel;
         }
     }
 }

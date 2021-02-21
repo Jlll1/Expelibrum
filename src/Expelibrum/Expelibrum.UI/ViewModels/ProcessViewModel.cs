@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class DirectoryViewModel : ViewModelBase, IDirectoryViewModel
+    public class ProcessViewModel : ViewModelBase, IProcessViewModel
     {
 
         #region fields
@@ -59,7 +59,7 @@ namespace Expelibrum.UI.ViewModels
         #endregion
 
         #region constructors
-        public DirectoryViewModel(IFolderBrowserDialog folderBrowser)
+        public ProcessViewModel(IFolderBrowserDialog folderBrowser)
         {
             _folderBrowser = folderBrowser;
             ChangeOriginDirectoryPathCommand = new RelayCommand(OnChangeOriginDirectoryPath);

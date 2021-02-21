@@ -17,7 +17,7 @@ namespace Expelibrum.UI.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
-            builder.RegisterType<DirectoryViewModel>().As<IDirectoryViewModel>();
+            builder.RegisterType<ProcessViewModel>().As<IProcessViewModel>();
 
 
             return builder.Build();
