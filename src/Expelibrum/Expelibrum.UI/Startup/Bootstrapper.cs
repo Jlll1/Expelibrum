@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Expelibrum.Services;
+using Expelibrum.UI.ViewModels;
 
 namespace Expelibrum.UI.Startup
 {
@@ -10,6 +11,9 @@ namespace Expelibrum.UI.Startup
             var builder = new ContainerBuilder();
 
             builder.RegisterType<OpenLibraryApiService>().As<IIsbnService>();
+
+            builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<MainViewModel>().AsSelf();
 
 
             return builder.Build();
