@@ -10,16 +10,30 @@ namespace Expelibrum.Services
 {
     public class PDFUtils
     {
-        private string _file;
-
-        public void OpenDocument(string fileName)
+        public string GetIsbn(string file)
         {
-            _file = fileName;
+            using (var _document = PdfReader.Open(file, PdfDocumentOpenMode.ReadOnly))
+            {
+
+                foreach (var page in _document.Pages.OfType<PdfPage>())
+                {
+                    var result = new StringBuilder();
+                    ExtractText(ContentReader.ReadContent(page), result);
+
+                    var isbn = FindIsbn(result.ToString());
+                    if (isbn != string.Empty)
+                    {
+                        return isbn;
+                    }
+                }
+
+                throw new InvalidOperationException("Isbn not found in the document");
+            }
         }
 
-        public string GetIsbn()
+        private string FindIsbn(string text)
         {
-            var substrings = GetText().Split(" ");
+            var substrings = text.Split(" ");
 
             for (int i = 0; i < substrings.Length; i++)
             {
@@ -29,23 +43,9 @@ namespace Expelibrum.Services
                 }
             }
 
-            throw new InvalidOperationException("Isbn not found in the document");
+            return string.Empty;
         }
 
-        private string GetText()
-        {
-            using (var _document = PdfReader.Open(_file, PdfDocumentOpenMode.ReadOnly))
-            {
-                var result = new StringBuilder();
-                foreach (var page in _document.Pages.OfType<PdfPage>())
-                {
-                    ExtractText(ContentReader.ReadContent(page), result);
-                    result.AppendLine();
-                }
-
-                return result.ToString();
-            }
-        }
 
         #region CObject Visitor
         private static void ExtractText(CObject obj, StringBuilder target)
