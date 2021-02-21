@@ -1,4 +1,5 @@
 ﻿using Expelibrum.UI.ViewModels.Dialogs;
+using System;
 using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
@@ -41,6 +42,7 @@ namespace Expelibrum.UI.ViewModels
 
         public ICommand ChangeOriginDirectoryPathCommand { get; }
         public ICommand ChangeTargetDirectoryPathCommand { get; }
+        public ICommand ProcessFilesCommand { get; }
 
         #region commandmethods
 
@@ -54,6 +56,11 @@ namespace Expelibrum.UI.ViewModels
             TargetDirectoryPath = _folderBrowser.GetDirectoryPathDialog();
         }
 
+        private void OnProcessFiles(object param)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         #endregion
@@ -64,7 +71,9 @@ namespace Expelibrum.UI.ViewModels
             _folderBrowser = folderBrowser;
             ChangeOriginDirectoryPathCommand = new RelayCommand(OnChangeOriginDirectoryPath);
             ChangeTargetDirectoryPathCommand = new RelayCommand(OnChangeTargetDirectoryPath);
+            ProcessFilesCommand = new RelayCommand(OnProcessFiles);
         }
+
         #endregion
 
     }

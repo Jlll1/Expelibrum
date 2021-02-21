@@ -8,17 +8,18 @@
              d:DesignHeight="150" d:DesignWidth="400">
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15">
 
-            <TextBlock Text="Origin Directory" Margin="3,3,0,0" FontWeight="DemiBold"/>
-            <WrapPanel HorizontalAlignment="Center" Margin="5">
-                <TextBox Text="{Binding OriginDirectoryPath}" Width="300"/>
-                <Button Command="{Binding ChangeOriginDirectoryPathCommand}" Margin="5,0" Width="30" Background="LightGray" Content="..."/>
-            </WrapPanel>
+        <TextBlock Text="Origin Directory" Margin="3,3,0,0" FontWeight="DemiBold"/>
+        <WrapPanel HorizontalAlignment="Center" Margin="5">
+            <TextBox Text="{Binding OriginDirectoryPath}" Width="300"/>
+            <Button Command="{Binding ChangeOriginDirectoryPathCommand}" Margin="5,0" Width="30" Background="LightGray" Content="..."/>
+        </WrapPanel>
 
-            <TextBlock Text="Target Directory" Margin="3,3,0,0" FontWeight="DemiBold"/>
-            <WrapPanel HorizontalAlignment="Center" Margin="5">
-                <TextBox Text="{Binding TargetDirectoryPath}" Width="300"/>
-                <Button Command="{Binding ChangeTargetDirectoryPathCommand}" Margin="5,0" Width="30" Background="LightGray" Content="..."/>
-            </WrapPanel>
+        <TextBlock Text="Target Directory" Margin="3,3,0,0" FontWeight="DemiBold"/>
+        <WrapPanel HorizontalAlignment="Center" Margin="5">
+            <TextBox Text="{Binding TargetDirectoryPath}" Width="300"/>
+            <Button Command="{Binding ChangeTargetDirectoryPathCommand}" Margin="5,0" Width="30" Background="LightGray" Content="..."/>
+        </WrapPanel>
 
-        </StackPanel>
+        <Button Margin="5" Content="Process" Command="{Binding ProcessFilesCommand}"/>
+    </StackPanel>
 </UserControl>
