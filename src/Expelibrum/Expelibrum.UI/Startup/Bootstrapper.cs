@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Expelibrum.Services;
 using Expelibrum.UI.ViewModels;
-using Expelibrum.UI.Views.Dialogs;
+using Expelibrum.UI.ViewModels.Dialogs;
 
 namespace Expelibrum.UI.Startup
 {
@@ -17,6 +17,7 @@ namespace Expelibrum.UI.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+            builder.RegisterType<DirectoryViewModel>().As<IDirectoryViewModel>();
 
 
             return builder.Build();
