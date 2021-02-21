@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+    <PackageReference Include="Autofac" Version="6.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Expelibrum.Core\Expelibrum.Services.csproj" />
+    <ProjectReference Include="..\Expelibrum.Model\Expelibrum.Model.csproj" />
   </ItemGroup>
 
 </Project>

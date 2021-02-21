@@ -1,4 +1,4 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using Expelibrum.UI.ViewModels;
 using System.Windows;
 
 namespace Expelibrum.UI
@@ -8,41 +8,13 @@ namespace Expelibrum.UI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string originDirectory;
-        private string targetDirectory;
+        private MainViewModel _viewModel;
 
-        public MainWindow()
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
-        }
-
-        private void BrowseOrigin_Click(object sender, RoutedEventArgs e)
-        {
-            originDirectory = SelectDirectory();
-            OriginTextBox.Text = originDirectory;
-        }
-
-        private void BrowseTarget_Click(object sender, RoutedEventArgs e)
-        {
-            targetDirectory = SelectDirectory();
-            TargetTextBox.Text = targetDirectory;
-        }
-
-        private void Go_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private string SelectDirectory()
-        {
-            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
-            dialog.IsFolderPicker = true;
-            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                return dialog.FileName;
-            }
-
-            return string.Empty;
+            _viewModel = viewModel;
+            DataContext = _viewModel;
         }
     }
 }
