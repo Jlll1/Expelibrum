@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.Win32;
 
-namespace Expelibrum.UI.Views.Dialogs
+namespace Expelibrum.UI.ViewModels.Dialogs
 {
     public class FolderBrowserDialog : IFolderBrowserDialog
     {

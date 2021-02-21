@@ -1,4 +1,4 @@
-﻿namespace Expelibrum.UI.Views.Dialogs
+﻿namespace Expelibrum.UI.ViewModels.Dialogs
 {
     public interface IFolderBrowserDialog
     {
