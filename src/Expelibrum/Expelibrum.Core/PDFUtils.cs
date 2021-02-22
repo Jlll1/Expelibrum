@@ -15,7 +15,7 @@ namespace Expelibrum.Services
             using (var _document = PdfReader.Open(file, PdfDocumentOpenMode.ReadOnly))
             {
 
-                foreach (var page in _document.Pages.OfType<PdfPage>())
+                foreach (var page in _document.Pages)
                 {
                     var result = new StringBuilder();
                     ExtractText(ContentReader.ReadContent(page), result);
