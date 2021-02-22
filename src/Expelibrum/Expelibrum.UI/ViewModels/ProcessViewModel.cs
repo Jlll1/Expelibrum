@@ -63,13 +63,22 @@ namespace Expelibrum.UI.ViewModels
             TargetDirectoryPath = _folderBrowser.GetDirectoryPathDialog();
         }
 
-        private void OnProcessFiles(object param)
+        private async void OnProcessFiles(object param)
         {
             var directory = new DirectoryInfo(OriginDirectoryPath);
 
             foreach (var file in directory.GetFiles("*.pdf"))
             {
-
+                try
+                {
+                    Book book = await GetBookFromFileAsync(file.FullName);
+                    string newTitle = book.title + ".pdf";
+                    Directory.Move(file.FullName, Path.Combine(TargetDirectoryPath, newTitle));
+                }
+                catch (InvalidOperationException)
+                {
+                    Directory.Move(file.FullName, Path.Combine(TargetDirectoryPath, file.Name));
+                }
             }
         }
 
