@@ -2,7 +2,7 @@
 
 namespace Expelibrum.UI.ViewModels
 {
-    public interface IDirectoryViewModel
+    public interface IProcessViewModel
     {
         ICommand ChangeOriginDirectoryPathCommand { get; }
         ICommand ChangeTargetDirectoryPathCommand { get; }

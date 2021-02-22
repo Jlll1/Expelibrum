@@ -8,14 +8,14 @@ using System.Text;
 
 namespace Expelibrum.Services
 {
-    public class PDFUtils
+    public class PDFUtils : IPDFUtils
     {
         public string GetIsbn(string file)
         {
             using (var _document = PdfReader.Open(file, PdfDocumentOpenMode.ReadOnly))
             {
 
-                foreach (var page in _document.Pages.OfType<PdfPage>())
+                foreach (var page in _document.Pages)
                 {
                     var result = new StringBuilder();
                     ExtractText(ContentReader.ReadContent(page), result);
