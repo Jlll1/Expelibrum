@@ -1,5 +1,9 @@
-﻿using Expelibrum.UI.ViewModels.Dialogs;
+﻿using Expelibrum.Model;
+using Expelibrum.Services;
+using Expelibrum.UI.ViewModels.Dialogs;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
@@ -10,6 +14,9 @@ namespace Expelibrum.UI.ViewModels
         #region fields
 
         private IFolderBrowserDialog _folderBrowser;
+        private IPDFUtils _pdfUtils;
+        private IIsbnService _isbnService;
+
         private string _originDirectoryPath;
         private string _targetDirectoryPath;
 
@@ -58,7 +65,12 @@ namespace Expelibrum.UI.ViewModels
 
         private void OnProcessFiles(object param)
         {
-            throw new NotImplementedException();
+            var directory = new DirectoryInfo(OriginDirectoryPath);
+
+            foreach (var file in directory.GetFiles("*.pdf"))
+            {
+
+            }
         }
 
         #endregion
@@ -66,12 +78,27 @@ namespace Expelibrum.UI.ViewModels
         #endregion
 
         #region constructors
-        public ProcessViewModel(IFolderBrowserDialog folderBrowser)
+        public ProcessViewModel(IFolderBrowserDialog folderBrowser,
+            IPDFUtils pdfUtils, IIsbnService isbnService)
         {
             _folderBrowser = folderBrowser;
+            _pdfUtils = pdfUtils;
+            _isbnService = isbnService;
+
             ChangeOriginDirectoryPathCommand = new RelayCommand(OnChangeOriginDirectoryPath);
             ChangeTargetDirectoryPathCommand = new RelayCommand(OnChangeTargetDirectoryPath);
             ProcessFilesCommand = new RelayCommand(OnProcessFiles);
+
+        }
+
+        #endregion
+
+        #region methods
+
+        private async Task<Book> GetBookFromFileAsync(string file)
+        {
+                string isbn = _pdfUtils.GetIsbn(file);
+                return await _isbnService.GetBookFromIsbn(isbn);
         }
 
         #endregion

@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Expelibrum.Services
 {
-    public class PDFUtils
+    public class PDFUtils : IPDFUtils
     {
         public string GetIsbn(string file)
         {
