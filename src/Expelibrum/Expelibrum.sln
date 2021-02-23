@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expelibrum.Services", "Expelibrum.Core\Expelibrum.Services.csproj", "{CDBE55E4-BE13-4735-94BA-02B0683DF5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expelibrum.Services", "Expelibrum.Services\Expelibrum.Services.csproj", "{CDBE55E4-BE13-4735-94BA-02B0683DF5CA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Expelibrum.Tests", "Expelibrum.Tests\Expelibrum.Tests.csproj", "{285966EE-1444-441E-BCFF-AA809FAB4658}"
 EndProject
