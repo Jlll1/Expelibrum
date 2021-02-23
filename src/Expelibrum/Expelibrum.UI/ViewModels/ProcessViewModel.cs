@@ -19,7 +19,7 @@ namespace Expelibrum.UI.ViewModels
 
         private string _originDirectoryPath;
         private string _targetDirectoryPath;
-        private bool _includeSubdirectories;
+        private bool _includeSubdirectories = true;
 
         #endregion
 
