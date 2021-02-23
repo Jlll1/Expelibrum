@@ -19,6 +19,7 @@ namespace Expelibrum.UI.ViewModels
 
         private string _originDirectoryPath;
         private string _targetDirectoryPath;
+        private bool _includeSubdirectories = true;
 
         #endregion
 
@@ -39,6 +40,16 @@ namespace Expelibrum.UI.ViewModels
             set
             {
                 _targetDirectoryPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IncludeSubdirectories
+        {
+            get => _includeSubdirectories;
+            set 
+            { 
+                _includeSubdirectories = value;
                 OnPropertyChanged();
             }
         }
@@ -66,8 +77,9 @@ namespace Expelibrum.UI.ViewModels
         private async void OnProcessFiles(object param)
         {
             var directory = new DirectoryInfo(OriginDirectoryPath);
+            var searchOption = (SearchOption)Convert.ToInt32(IncludeSubdirectories);
 
-            foreach (var file in directory.GetFiles("*.pdf"))
+            foreach (var file in directory.GetFiles("*.pdf", searchOption))
             {
                 try
                 {
