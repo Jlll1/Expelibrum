@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Expelibrum.Core\Expelibrum.Services.csproj" />
+    <ProjectReference Include="..\Expelibrum.Services\Expelibrum.Services.csproj" />
   </ItemGroup>
 
 </Project>
