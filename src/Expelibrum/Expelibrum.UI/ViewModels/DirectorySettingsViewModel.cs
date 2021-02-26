@@ -26,6 +26,7 @@ namespace Expelibrum.UI.ViewModels
             {
                 _originDirectoryPath = value;
                 OnPropertyChanged();
+                ValidateProperty();
             }
         }
         public string TargetDirectoryPath
@@ -35,6 +36,7 @@ namespace Expelibrum.UI.ViewModels
             {
                 _targetDirectoryPath = value;
                 OnPropertyChanged();
+                ValidateProperty();
             }
         }
 
@@ -45,6 +47,7 @@ namespace Expelibrum.UI.ViewModels
             {
                 _includeSubdirectories = value;
                 OnPropertyChanged();
+                ValidateProperty();
             }
         }
 
