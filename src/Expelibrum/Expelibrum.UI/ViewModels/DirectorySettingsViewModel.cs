@@ -1,4 +1,6 @@
 ﻿using Expelibrum.UI.ViewModels.Dialogs;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
@@ -81,6 +83,26 @@ namespace Expelibrum.UI.ViewModels
         #endregion
 
         #region methods
+
+        protected override IEnumerable<string> GetCustomErrors(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(OriginDirectoryPath):
+                    if(!Directory.Exists(OriginDirectoryPath))
+                    {
+                        yield return "Not a valid path";
+                    }
+                    break;
+
+                case nameof(TargetDirectoryPath):
+                    if (!Directory.Exists(TargetDirectoryPath))
+                    {
+                        yield return "Not a valid path";
+                    }
+                    break;
+            }
+        }
 
         #endregion
     }
