@@ -7,6 +7,7 @@ namespace Expelibrum.UI.ViewModels
         ICommand ChangeOriginDirectoryPathCommand { get; }
         ICommand ChangeTargetDirectoryPathCommand { get; }
         bool IncludeSubdirectories { get; set; }
+        bool HasErrors { get; }
         string OriginDirectoryPath { get; set; }
         string TargetDirectoryPath { get; set; }
     }

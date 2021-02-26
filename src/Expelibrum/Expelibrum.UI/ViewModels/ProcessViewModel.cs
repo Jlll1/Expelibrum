@@ -51,6 +51,13 @@ namespace Expelibrum.UI.ViewModels
             }
         }
 
+        private bool CanProcessFiles(object param)
+        {
+            return !DirectorySettings.HasErrors
+                && !string.IsNullOrEmpty(DirectorySettings.OriginDirectoryPath)
+                && !string.IsNullOrEmpty(DirectorySettings.TargetDirectoryPath);
+        }
+
         #endregion
 
         #endregion
@@ -65,7 +72,7 @@ namespace Expelibrum.UI.ViewModels
 
             DirectorySettings = directorySettingsViewModel;
 
-            ProcessFilesCommand = new RelayCommand(OnProcessFiles);
+            ProcessFilesCommand = new RelayCommand(OnProcessFiles, CanProcessFiles);
 
         }
 
