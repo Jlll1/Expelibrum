@@ -9,7 +9,7 @@
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15">
 
         <local:DirectorySettingsView DataContext="{Binding DirectorySettings}"/>
-        <Button Margin="5" Content="Process" Command="{Binding ProcessFilesCommand}"/>
+        <Button Margin="10" Content="Process" Command="{Binding ProcessFilesCommand}"/>
         
     </StackPanel>
 </UserControl>
