@@ -29,6 +29,8 @@ namespace Expelibrum.UI.ViewModels
                 new Tag("PublishDate", "publish_date"),
                 new Tag("Subject", "subjects")
             };
+
+            SelectedTag = Tags[0];
         }
     }
 }
