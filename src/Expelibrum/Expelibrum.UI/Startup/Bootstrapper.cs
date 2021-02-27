@@ -20,7 +20,7 @@ namespace Expelibrum.UI.Startup
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<ProcessViewModel>().As<IProcessViewModel>();
             builder.RegisterType<DirectorySettingsViewModel>().As<IDirectorySettingsViewModel>();
-
+            builder.RegisterType<NameTaggingViewModel>().As<INameTaggingViewModel>();
 
             return builder.Build();
         }

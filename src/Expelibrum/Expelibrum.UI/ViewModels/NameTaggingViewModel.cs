@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class NameTaggingViewModel : ViewModelBase
+    public class NameTaggingViewModel : ViewModelBase, INameTaggingViewModel
     {
         private Tag selectedTag;
 

@@ -16,13 +16,12 @@ namespace Expelibrum.UI.ViewModels
         private IPDFUtils _pdfUtils;
         private IIsbnService _isbnService;
 
-        private IDirectorySettingsViewModel _directorySettings;
-
         #endregion
 
         #region properties
 
         public IDirectorySettingsViewModel DirectorySettings { get; }
+        public INameTaggingViewModel NameTaggingViewModel { get; }
 
         #endregion
 
@@ -64,6 +63,7 @@ namespace Expelibrum.UI.ViewModels
 
         #region constructors
         public ProcessViewModel(IDirectorySettingsViewModel directorySettingsViewModel,
+            INameTaggingViewModel nameTaggingViewModel,
             IPDFUtils pdfUtils,
             IIsbnService isbnService)
         {
@@ -71,6 +71,7 @@ namespace Expelibrum.UI.ViewModels
             _isbnService = isbnService;
 
             DirectorySettings = directorySettingsViewModel;
+            NameTaggingViewModel = nameTaggingViewModel;
 
             ProcessFilesCommand = new RelayCommand(OnProcessFiles, CanProcessFiles);
 
