@@ -1,36 +1,27 @@
 ﻿using Expelibrum.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Expelibrum.UI.ViewModels
 {
     public class NameTaggingViewModel : ViewModelBase, INameTaggingViewModel
     {
-        private Tag selectedTag;
-
-        public List<Tag> Tags { get; }
-        public Tag SelectedTag
+        public ObservableCollection<TagViewModel> TagVMs { get; }
+        public IEnumerable<string> SelectedTags
         {
-            get => selectedTag;
-            set
+            get
             {
-                selectedTag = value;
-                OnPropertyChanged();
+                foreach (var tagVM in TagVMs)
+                {
+                    yield return tagVM.SelectedTag.PropertyName;
+                }
             }
         }
 
         public NameTaggingViewModel()
         {
-            Tags = new List<Tag>
-            {
-                new Tag("Title", "title"),
-                new Tag("Author", "authors"),
-                new Tag("PageCount", "number_of_pages"),
-                new Tag("Publisher", "publishers"),
-                new Tag("PublishDate", "publish_date"),
-                new Tag("Subject", "subjects")
-            };
-
-            SelectedTag = Tags[0];
+            TagVMs = new ObservableCollection<TagViewModel>();
+            TagVMs.Add(new TagViewModel());
         }
     }
 }

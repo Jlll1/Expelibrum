@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Expelibrum.UI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <ListView ItemsSource="{Binding TagVMs}">
         <ComboBox ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}"/>
-    </Grid>
+    </ListView>
 </UserControl>

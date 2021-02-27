@@ -1,11 +1,12 @@
 ﻿using Expelibrum.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Expelibrum.UI.ViewModels
 {
     public interface INameTaggingViewModel
     {
-        Tag SelectedTag { get; set; }
-        List<Tag> Tags { get; }
+        IEnumerable<string> SelectedTags { get; }
+        ObservableCollection<TagViewModel> TagVMs { get; }
     }
 }
