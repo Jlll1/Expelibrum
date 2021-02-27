@@ -83,6 +83,5 @@ namespace Expelibrum.UI.ViewModels
         }
 
         #endregion
-
     }
 }

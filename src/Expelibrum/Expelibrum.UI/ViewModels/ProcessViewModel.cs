@@ -1,7 +1,6 @@
 ﻿using Expelibrum.Model;
 using Expelibrum.Services;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -58,7 +57,6 @@ namespace Expelibrum.UI.ViewModels
                         }
                     }
                     
-
                     string fullTitle = String.Join("-", title) + ".pdf";
                     Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, fullTitle));
                 }
@@ -93,7 +91,6 @@ namespace Expelibrum.UI.ViewModels
             NameTaggingViewModel = nameTaggingViewModel;
 
             ProcessFilesCommand = new RelayCommand(OnProcessFiles, CanProcessFiles);
-
         }
 
         #endregion
