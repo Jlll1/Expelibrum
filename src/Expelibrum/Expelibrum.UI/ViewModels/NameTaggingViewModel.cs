@@ -3,9 +3,20 @@ using System.Collections.Generic;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class NameTaggingViewModel
+    public class NameTaggingViewModel : ViewModelBase
     {
+        private Tag selectedTag;
+
         public List<Tag> Tags { get; }
+        public Tag SelectedTag
+        {
+            get => selectedTag;
+            set
+            {
+                selectedTag = value;
+                OnPropertyChanged();
+            }
+        }
 
         public NameTaggingViewModel()
         {
