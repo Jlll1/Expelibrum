@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Expelibrum.Services;
+using Expelibrum.Services.Events;
 using Expelibrum.UI.ViewModels;
 using Expelibrum.UI.ViewModels.Dialogs;
 
@@ -16,11 +17,13 @@ namespace Expelibrum.UI.Startup
 
             builder.RegisterType<FolderBrowserDialog>().As<IFolderBrowserDialog>();
 
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
             builder.RegisterType<ProcessViewModel>().As<IProcessViewModel>();
             builder.RegisterType<DirectorySettingsViewModel>().As<IDirectorySettingsViewModel>();
-
+            builder.RegisterType<NameTaggingViewModel>().As<INameTaggingViewModel>();
 
             return builder.Build();
         }

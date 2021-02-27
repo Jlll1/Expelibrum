@@ -9,6 +9,7 @@
     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15">
 
         <local:DirectorySettingsView DataContext="{Binding DirectorySettings}"/>
+        <local:NameTaggingView DataContext="{Binding NameTaggingViewModel}"/>
         <Button Margin="10" Content="Process" Command="{Binding ProcessFilesCommand}"/>
         
     </StackPanel>

@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Expelibrum.UI.Views.NameTaggingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Expelibrum.UI.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <ItemsControl ItemsSource="{Binding TagVMs}"
+                      Margin="0, 7">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox HorizontalAlignment="Stretch" Width="Auto" ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}"/>
+                        <Button HorizontalAlignment="Right" Grid.Column="1" Width="25" Command="{Binding RemoveTagCommand}" Content="-"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <Button Content="+" Command="{Binding AddTagCommand}"/>
+    </StackPanel>
+    
+</UserControl>

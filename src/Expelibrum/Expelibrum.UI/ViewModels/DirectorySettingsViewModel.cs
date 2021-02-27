@@ -10,7 +10,6 @@ namespace Expelibrum.UI.ViewModels
         #region fields
 
         private IFolderBrowserDialog _folderBrowser;
-
         private string _originDirectoryPath;
         private string _targetDirectoryPath;
         private bool _includeSubdirectories = true;
@@ -39,7 +38,6 @@ namespace Expelibrum.UI.ViewModels
                 ValidateProperty();
             }
         }
-
         public bool IncludeSubdirectories
         {
             get => _includeSubdirectories;
