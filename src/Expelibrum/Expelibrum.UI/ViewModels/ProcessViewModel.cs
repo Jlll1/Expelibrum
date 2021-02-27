@@ -1,7 +1,7 @@
 ﻿using Expelibrum.Model;
 using Expelibrum.Services;
-using Expelibrum.UI.ViewModels.Dialogs;
 using System;
+using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -34,13 +34,28 @@ namespace Expelibrum.UI.ViewModels
         {
             var directory = new DirectoryInfo(DirectorySettings.OriginDirectoryPath);
             var searchOption = (SearchOption)Convert.ToInt32(DirectorySettings.IncludeSubdirectories);
+            var selectedTag = NameTaggingViewModel.SelectedTag.PropertyName;
 
             foreach (var file in directory.GetFiles("*.pdf", searchOption))
             {
                 try
                 {
                     Book book = await GetBookFromFileAsync(file.FullName);
-                    string newTitle = book.title + ".pdf";
+
+                    var selectedProperty = typeof(Book).GetProperty(selectedTag).GetValue(book);
+                    string tagValue;
+
+                    if (selectedProperty.GetType().IsArray)
+                    {
+                        var selectedArray = selectedProperty as dynamic[];
+                        tagValue = selectedArray[0].name;
+                    }
+                    else
+                    {
+                        tagValue = selectedProperty as String;
+                    }
+
+                    string newTitle = tagValue + ".pdf";  
                     Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, newTitle));
                 }
                 catch (InvalidOperationException)
