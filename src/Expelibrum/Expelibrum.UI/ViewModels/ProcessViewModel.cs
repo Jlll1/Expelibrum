@@ -2,6 +2,7 @@
 using Expelibrum.Services;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,7 +11,6 @@ namespace Expelibrum.UI.ViewModels
 {
     public class ProcessViewModel : ViewModelBase, IProcessViewModel
     {
-
         #region fields
 
         private IPDFUtils _pdfUtils;
@@ -34,29 +34,33 @@ namespace Expelibrum.UI.ViewModels
         {
             var directory = new DirectoryInfo(DirectorySettings.OriginDirectoryPath);
             var searchOption = (SearchOption)Convert.ToInt32(DirectorySettings.IncludeSubdirectories);
-            var selectedTag = NameTaggingViewModel.SelectedTag.PropertyName;
+            var selectedTags = NameTaggingViewModel.SelectedTags;
 
             foreach (var file in directory.GetFiles("*.pdf", searchOption))
             {
                 try
                 {
                     Book book = await GetBookFromFileAsync(file.FullName);
+                    List<string> title = new List<string>();
 
-                    var selectedProperty = typeof(Book).GetProperty(selectedTag).GetValue(book);
-                    string tagValue;
-
-                    if (selectedProperty.GetType().IsArray)
+                    foreach (var tag in selectedTags)
                     {
-                        var selectedArray = selectedProperty as dynamic[];
-                        tagValue = selectedArray[0].name;
+                        var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
+                        
+                        if (selectedProperty.GetType().IsArray)
+                        {
+                            var selectedArray = selectedProperty as dynamic[];
+                            title.Add(selectedArray[0].name);
+                        }
+                        else
+                        {
+                            title.Add(selectedProperty as String);
+                        }
                     }
-                    else
-                    {
-                        tagValue = selectedProperty as String;
-                    }
+                    
 
-                    string newTitle = tagValue + ".pdf";  
-                    Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, newTitle));
+                    string fullTitle = String.Join("-", title) + ".pdf";
+                    Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, fullTitle));
                 }
                 catch (InvalidOperationException)
                 {
@@ -103,6 +107,5 @@ namespace Expelibrum.UI.ViewModels
         }
 
         #endregion
-
     }
 }
