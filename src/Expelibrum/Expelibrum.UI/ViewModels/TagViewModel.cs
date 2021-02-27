@@ -9,24 +9,35 @@ namespace Expelibrum.UI.ViewModels
 {
     public class TagViewModel : ViewModelBase
     {
+        #region fields
+
         private IEventAggregator _ea;
         private Tag _selectedTag;
         private int tagCount;
 
+        #endregion
+
+        #region properties
+
+        public int Id { get; }
+        public List<Tag> Tags { get; }
         public Tag SelectedTag
         {
             get => _selectedTag;
-            set 
+            set
             {
                 _selectedTag = value;
                 OnPropertyChanged();
             }
         }
 
-        public List<Tag> Tags { get; }
-        public int Id { get; }
+        #endregion
+
+        #region commands
 
         public ICommand RemoveTagCommand { get; }
+
+        #region commandmethods
 
         private bool CanRemoveTag(object param)
         {
@@ -37,6 +48,12 @@ namespace Expelibrum.UI.ViewModels
         {
             _ea.PublishEvent("TagRemoveRequested", new TagRemoveRequestedEventArgs { Id = this.Id });
         }
+
+        #endregion
+
+        #endregion
+
+        #region constructors
 
         public TagViewModel(int id, IEventAggregator ea)
         {
@@ -59,10 +76,17 @@ namespace Expelibrum.UI.ViewModels
             RemoveTagCommand = new RelayCommand(OnRemoveTag, CanRemoveTag);
         }
 
+        #endregion
+
+        #region methods
+
         private void OnTagCountChanged(EventArgs e)
         {
             var args = e as TagCountChangedEventArgs;
             tagCount = args.Count;
         }
+
+        #endregion
+
     }
 }
