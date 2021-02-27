@@ -5,6 +5,7 @@ using PdfSharpCore.Pdf.IO;
 using System;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Expelibrum.Services
 {
@@ -31,24 +32,34 @@ namespace Expelibrum.Services
             }
         }
 
-        private string FindIsbn(string text)
+        public string FindIsbn(string text)
         {
             var substrings = text.Split(" ");
 
             for (int i = 0; i < substrings.Length; i++)
             {
-                if (substrings[i].ToLowerInvariant().Equals("isbn"))
+                if (substrings[i].ToLowerInvariant().Contains("isbn"))
                 {
-                    return substrings[i + 1];
+                    for (int j = 0; j < substrings.Length - i; j ++)
+                    {
+                        string substring = substrings[i + j];
+                        if (substring.Length >= 10)
+                        {
+                            substring = Regex.Replace(substring, @"[^0-9]", "");
+                            if (Int64.TryParse(substring, out _))
+                            {
+                                return substring;
+                            }
+                        }
+                    }
                 }
             }
 
             return string.Empty;
         }
 
-
-        #region CObject Visitor
-        private static void ExtractText(CObject obj, StringBuilder target)
+            #region CObject Visitor
+            private static void ExtractText(CObject obj, StringBuilder target)
         {
             if (obj is CArray)
                 ExtractText((CArray)obj, target);
