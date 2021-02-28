@@ -1,91 +1,22 @@
-﻿using Expelibrum.Model;
-using Expelibrum.Services.Events;
+﻿using Expelibrum.Services.Events;
 using Expelibrum.UI.Events;
-using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class NameTagViewModel : ViewModelBase
+    public class NameTagViewModel : TagViewModelBase
     {
-        #region fields
-
-        private IEventAggregator _ea;
-        private Tag _selectedTag;
-        private int tagCount;
-
-        #endregion
-
-        #region properties
-
-        public int Id { get; }
-        public List<Tag> Tags { get; }
-        public Tag SelectedTag
+        public NameTagViewModel(int id, IEventAggregator ea) : base (id, ea)
         {
-            get => _selectedTag;
-            set
-            {
-                _selectedTag = value;
-                OnPropertyChanged();
-            }
         }
 
-        #endregion
-
-        #region commands
-
-        public ICommand RemoveTagCommand { get; }
-
-        #region commandmethods
-
-        private bool CanRemoveTag(object param)
+        protected override void SubscribeToEvents()
         {
-            return tagCount > 1;
+            _ea.SubscribeToEvent("NameTagCountChanged", base.OnTagCountChanged);
         }
 
-        private void OnRemoveTag(object param)
+        protected override void OnRemoveTag(object param)
         {
             _ea.PublishEvent("NameTagRemoveRequested", new NameTagRemoveRequestedEventArgs { Id = this.Id });
         }
-
-        #endregion
-
-        #endregion
-
-        #region constructors
-
-        public NameTagViewModel(int id, IEventAggregator ea)
-        {
-            Id = id;
-            _ea = ea;
-
-            _ea.SubscribeToEvent("NameTagCountChanged", OnTagCountChanged);
-
-            Tags = new List<Tag>
-            {
-                new Tag("Title", "title"),
-                new Tag("Author", "authors"),
-                new Tag("PageCount", "number_of_pages"),
-                new Tag("Publisher", "publishers"),
-                new Tag("PublishDate", "publish_date"),
-                new Tag("Subject", "subjects")
-            };
-
-            SelectedTag = Tags[0];
-            RemoveTagCommand = new RelayCommand(OnRemoveTag, CanRemoveTag);
-        }
-
-        #endregion
-
-        #region methods
-
-        private void OnTagCountChanged(EventArgs e)
-        {
-            var args = e as NameTagCountChangedEventArgs;
-            tagCount = args.Count;
-        }
-
-        #endregion
     }
 }
