@@ -2,7 +2,7 @@
 
 namespace Expelibrum.UI.Events
 {
-    public class NameTagRemoveRequestedEventArgs : EventArgs
+    public class TagRemoveRequestedEventArgs : EventArgs
     {
         public int Id;
     }

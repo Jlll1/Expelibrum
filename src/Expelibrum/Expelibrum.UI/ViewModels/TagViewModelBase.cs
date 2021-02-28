@@ -87,7 +87,7 @@ namespace Expelibrum.UI.ViewModels
 
         protected void OnTagCountChanged(EventArgs e)
         {
-            var args = e as NameTagCountChangedEventArgs;
+            var args = e as TagCountChangedEventArgs;
             tagCount = args.Count;
         }
 

@@ -66,20 +66,20 @@ namespace Expelibrum.UI.ViewModels
 
         private void OnTagRemoveRequested(EventArgs e)
         {
-            var args = e as NameTagRemoveRequestedEventArgs;
+            var args = e as TagRemoveRequestedEventArgs;
             RemoveTag(args.Id);
         }
 
         private void AddTag()
         {
             TagVMs.Add(new NameTagViewModel(TagVMs.Count, _ea));
-            _ea.PublishEvent("NameTagCountChanged", new NameTagCountChangedEventArgs() { Count = TagVMs.Count });
+            _ea.PublishEvent("NameTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         private void RemoveTag(int id)
         {
             TagVMs.RemoveAt(id);
-            _ea.PublishEvent("NameTagCountChanged", new NameTagCountChangedEventArgs() { Count = TagVMs.Count });
+            _ea.PublishEvent("NameTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         #endregion

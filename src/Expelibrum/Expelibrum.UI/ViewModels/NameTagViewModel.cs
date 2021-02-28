@@ -16,7 +16,7 @@ namespace Expelibrum.UI.ViewModels
 
         protected override void OnRemoveTag(object param)
         {
-            _ea.PublishEvent("NameTagRemoveRequested", new NameTagRemoveRequestedEventArgs { Id = this.Id });
+            _ea.PublishEvent("NameTagRemoveRequested", new TagRemoveRequestedEventArgs { Id = this.Id });
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Expelibrum.UI.Events
 {
-    public class NameTagCountChangedEventArgs : EventArgs
+    public class TagCountChangedEventArgs : EventArgs
     {
         public int Count;
     }
