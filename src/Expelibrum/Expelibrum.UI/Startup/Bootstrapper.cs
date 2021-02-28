@@ -13,7 +13,7 @@ namespace Expelibrum.UI.Startup
             var builder = new ContainerBuilder();
 
             builder.RegisterType<OpenLibraryApiService>().As<IIsbnService>();
-            builder.RegisterType<PDFUtils>().As<IPDFUtils>();
+            builder.RegisterType<PdfIsbnFinder>().As<IPDFUtils>();
 
             builder.RegisterType<FolderBrowserDialog>().As<IFolderBrowserDialog>();
 
