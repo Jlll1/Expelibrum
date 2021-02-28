@@ -46,7 +46,7 @@ namespace Expelibrum.UI.ViewModels
 
         private void OnRemoveTag(object param)
         {
-            _ea.PublishEvent("TagRemoveRequested", new TagRemoveRequestedEventArgs { Id = this.Id });
+            _ea.PublishEvent("NameTagRemoveRequested", new NameTagRemoveRequestedEventArgs { Id = this.Id });
         }
 
         #endregion
@@ -60,7 +60,7 @@ namespace Expelibrum.UI.ViewModels
             Id = id;
             _ea = ea;
 
-            _ea.SubscribeToEvent("TagCountChanged", OnTagCountChanged);
+            _ea.SubscribeToEvent("NameTagCountChanged", OnTagCountChanged);
 
             Tags = new List<Tag>
             {
@@ -82,7 +82,7 @@ namespace Expelibrum.UI.ViewModels
 
         private void OnTagCountChanged(EventArgs e)
         {
-            var args = e as TagCountChangedEventArgs;
+            var args = e as NameTagCountChangedEventArgs;
             tagCount = args.Count;
         }
 

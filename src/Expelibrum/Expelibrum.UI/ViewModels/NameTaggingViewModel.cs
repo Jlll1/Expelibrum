@@ -52,7 +52,7 @@ namespace Expelibrum.UI.ViewModels
         {
             _ea = ea;
 
-            _ea.SubscribeToEvent("TagRemoveRequested", OnTagRemoveRequested);
+            _ea.SubscribeToEvent("NameTagRemoveRequested", OnTagRemoveRequested);
 
             TagVMs = new ObservableCollection<TagViewModel>();
             AddTag();
@@ -66,20 +66,20 @@ namespace Expelibrum.UI.ViewModels
 
         private void OnTagRemoveRequested(EventArgs e)
         {
-            var args = e as TagRemoveRequestedEventArgs;
+            var args = e as NameTagRemoveRequestedEventArgs;
             RemoveTag(args.Id);
         }
 
         private void AddTag()
         {
             TagVMs.Add(new TagViewModel(TagVMs.Count, _ea));
-            _ea.PublishEvent("TagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
+            _ea.PublishEvent("NameTagCountChanged", new NameTagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         private void RemoveTag(int id)
         {
             TagVMs.RemoveAt(id);
-            _ea.PublishEvent("TagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
+            _ea.PublishEvent("NameTagCountChanged", new NameTagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         #endregion
