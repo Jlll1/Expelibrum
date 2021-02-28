@@ -17,7 +17,7 @@ namespace Expelibrum.UI.ViewModels
 
         #region properties
 
-        public ObservableCollection<TagViewModel> TagVMs { get; }
+        public ObservableCollection<NameTagViewModel> TagVMs { get; }
         public IEnumerable<string> SelectedTags
         {
             get
@@ -54,7 +54,7 @@ namespace Expelibrum.UI.ViewModels
 
             _ea.SubscribeToEvent("NameTagRemoveRequested", OnTagRemoveRequested);
 
-            TagVMs = new ObservableCollection<TagViewModel>();
+            TagVMs = new ObservableCollection<NameTagViewModel>();
             AddTag();
 
             AddTagCommand = new RelayCommand(OnAddTag);
@@ -72,7 +72,7 @@ namespace Expelibrum.UI.ViewModels
 
         private void AddTag()
         {
-            TagVMs.Add(new TagViewModel(TagVMs.Count, _ea));
+            TagVMs.Add(new NameTagViewModel(TagVMs.Count, _ea));
             _ea.PublishEvent("NameTagCountChanged", new NameTagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 

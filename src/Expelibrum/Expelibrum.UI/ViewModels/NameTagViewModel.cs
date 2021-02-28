@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class TagViewModel : ViewModelBase
+    public class NameTagViewModel : ViewModelBase
     {
         #region fields
 
@@ -55,7 +55,7 @@ namespace Expelibrum.UI.ViewModels
 
         #region constructors
 
-        public TagViewModel(int id, IEventAggregator ea)
+        public NameTagViewModel(int id, IEventAggregator ea)
         {
             Id = id;
             _ea = ea;

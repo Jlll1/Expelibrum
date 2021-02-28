@@ -7,6 +7,6 @@ namespace Expelibrum.UI.ViewModels
     public interface INameTaggingViewModel
     {
         IEnumerable<string> SelectedTags { get; }
-        ObservableCollection<TagViewModel> TagVMs { get; }
+        ObservableCollection<NameTagViewModel> TagVMs { get; }
     }
 }
