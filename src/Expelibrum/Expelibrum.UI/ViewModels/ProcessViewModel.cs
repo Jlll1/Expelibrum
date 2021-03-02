@@ -45,7 +45,9 @@ namespace Expelibrum.UI.ViewModels
                     var selectedDirectoryTags = DirectoryTaggingViewModel.SelectedTags;
 
                     string title = GetFileName(selectedTitleTags, book);
+                    title = string.Join("-", title.Split(Path.GetInvalidFileNameChars()));
                     string path = GetPath(selectedDirectoryTags, book);
+                    path = string.Join("-", path.Split(Path.GetInvalidFileNameChars()));
 
                     string fullPath = Path.Combine(DirectorySettings.TargetDirectoryPath, path);
                     Directory.CreateDirectory(fullPath);
