@@ -34,32 +34,23 @@ namespace Expelibrum.UI.ViewModels
         {
             var directory = new DirectoryInfo(DirectorySettings.OriginDirectoryPath);
             var searchOption = (SearchOption)Convert.ToInt32(DirectorySettings.IncludeSubdirectories);
-            var selectedTags = NameTaggingViewModel.SelectedTags;
 
             foreach (var file in directory.GetFiles("*.pdf", searchOption))
             {
                 try
                 {
                     Book book = await GetBookFromFileAsync(file.FullName);
-                    List<string> title = new List<string>();
 
-                    foreach (var tag in selectedTags)
-                    {
-                        var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
+                    var selectedTitleTags = NameTaggingViewModel.SelectedTags;
+                    var selectedDirectoryTags = DirectoryTaggingViewModel.SelectedTags;
 
-                        if (selectedProperty.GetType().IsArray)
-                        {
-                            var selectedArray = selectedProperty as dynamic[];
-                            title.Add(selectedArray[0].name);
-                        }
-                        else
-                        {
-                            title.Add(selectedProperty as String);
-                        }
-                    }
+                    string title = GetFileName(selectedTitleTags, book);
+                    string path = GetPath(selectedDirectoryTags, book);
 
-                    string fullTitle = String.Join("-", title) + ".pdf";
-                    Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, fullTitle));
+                    string fullPath = Path.Combine(DirectorySettings.TargetDirectoryPath, path);
+                    Directory.CreateDirectory(fullPath);
+                    string fullTitle = title + ".pdf";
+                    Directory.Move(file.FullName, Path.Combine(fullPath, fullTitle));
                 }
                 catch (InvalidOperationException)
                 {
@@ -104,6 +95,42 @@ namespace Expelibrum.UI.ViewModels
         {
             string isbn = _pdfUtils.GetIsbn(file);
             return await _isbnService.GetBookFromIsbn(isbn);
+        }
+
+        private string GetFileName(IEnumerable<string> selectedTags, Book book)
+        {
+            var tags = GetTags(selectedTags, book);
+
+            return String.Join("-", tags);
+        }
+
+        private string GetPath(IEnumerable<string> selectedTags, Book book)
+        {
+            var tags = GetTags(selectedTags, book);
+
+            return Path.Combine(tags.ToArray());
+        }
+
+        private List<string> GetTags(IEnumerable<string> selectedTags, Book book)
+        {
+            List<string> title = new List<string>();
+
+            foreach (var tag in selectedTags)
+            {
+                var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
+
+                if (selectedProperty.GetType().IsArray)
+                {
+                    var selectedArray = selectedProperty as dynamic[];
+                    title.Add(selectedArray[0].name);
+                }
+                else
+                {
+                    title.Add(selectedProperty as String);
+                }
+            }
+
+            return title;
         }
 
         #endregion
