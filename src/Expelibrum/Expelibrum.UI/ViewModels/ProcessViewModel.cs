@@ -21,6 +21,7 @@ namespace Expelibrum.UI.ViewModels
 
         public IDirectorySettingsViewModel DirectorySettings { get; }
         public INameTaggingViewModel NameTaggingViewModel { get; }
+        public IDirectoryTaggingViewModel DirectoryTaggingViewModel { get; }
 
         #endregion
 
@@ -45,7 +46,7 @@ namespace Expelibrum.UI.ViewModels
                     foreach (var tag in selectedTags)
                     {
                         var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
-                        
+
                         if (selectedProperty.GetType().IsArray)
                         {
                             var selectedArray = selectedProperty as dynamic[];
@@ -56,7 +57,7 @@ namespace Expelibrum.UI.ViewModels
                             title.Add(selectedProperty as String);
                         }
                     }
-                    
+
                     string fullTitle = String.Join("-", title) + ".pdf";
                     Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, fullTitle));
                 }
@@ -81,6 +82,7 @@ namespace Expelibrum.UI.ViewModels
         #region constructors
         public ProcessViewModel(IDirectorySettingsViewModel directorySettingsViewModel,
             INameTaggingViewModel nameTaggingViewModel,
+            IDirectoryTaggingViewModel directoryTaggingViewModel,
             IPDFUtils pdfUtils,
             IIsbnService isbnService)
         {
@@ -89,6 +91,7 @@ namespace Expelibrum.UI.ViewModels
 
             DirectorySettings = directorySettingsViewModel;
             NameTaggingViewModel = nameTaggingViewModel;
+            DirectoryTaggingViewModel = directoryTaggingViewModel;
 
             ProcessFilesCommand = new RelayCommand(OnProcessFiles, CanProcessFiles);
         }
