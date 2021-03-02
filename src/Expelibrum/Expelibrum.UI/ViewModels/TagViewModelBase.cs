@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class TagViewModel : ViewModelBase
+    public class TagViewModelBase : ViewModelBase
     {
         #region fields
 
-        private IEventAggregator _ea;
+        protected IEventAggregator _ea;
         private Tag _selectedTag;
         private int tagCount;
 
@@ -44,9 +44,9 @@ namespace Expelibrum.UI.ViewModels
             return tagCount > 1;
         }
 
-        private void OnRemoveTag(object param)
+        protected virtual void OnRemoveTag(object param)
         {
-            _ea.PublishEvent("NameTagRemoveRequested", new NameTagRemoveRequestedEventArgs { Id = this.Id });
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -55,12 +55,12 @@ namespace Expelibrum.UI.ViewModels
 
         #region constructors
 
-        public TagViewModel(int id, IEventAggregator ea)
+        public TagViewModelBase(int id, IEventAggregator ea)
         {
             Id = id;
             _ea = ea;
 
-            _ea.SubscribeToEvent("NameTagCountChanged", OnTagCountChanged);
+            SubscribeToEvents();
 
             Tags = new List<Tag>
             {
@@ -80,9 +80,14 @@ namespace Expelibrum.UI.ViewModels
 
         #region methods
 
-        private void OnTagCountChanged(EventArgs e)
+        protected virtual void SubscribeToEvents()
         {
-            var args = e as NameTagCountChangedEventArgs;
+            throw new NotImplementedException();
+        }
+
+        protected void OnTagCountChanged(EventArgs e)
+        {
+            var args = e as TagCountChangedEventArgs;
             tagCount = args.Count;
         }
 

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Expelibrum.UI.ViewModels
 {
-    public class NameTaggingViewModel : ViewModelBase, INameTaggingViewModel
+    public class DirectoryTaggingViewModel : ViewModelBase, IDirectoryTaggingViewModel
     {
         #region fields
 
@@ -17,7 +17,7 @@ namespace Expelibrum.UI.ViewModels
 
         #region properties
 
-        public ObservableCollection<NameTagViewModel> TagVMs { get; }
+        public ObservableCollection<DirectoryTagViewModel> TagVMs { get; }
         public IEnumerable<string> SelectedTags
         {
             get
@@ -48,13 +48,13 @@ namespace Expelibrum.UI.ViewModels
 
         #region constructors
 
-        public NameTaggingViewModel(IEventAggregator ea)
+        public DirectoryTaggingViewModel(IEventAggregator ea)
         {
             _ea = ea;
 
-            _ea.SubscribeToEvent("NameTagRemoveRequested", OnTagRemoveRequested);
+            _ea.SubscribeToEvent("DirectoryTagRemoveRequested", OnTagRemoveRequested);
 
-            TagVMs = new ObservableCollection<NameTagViewModel>();
+            TagVMs = new ObservableCollection<DirectoryTagViewModel>();
             AddTag();
 
             AddTagCommand = new RelayCommand(OnAddTag);
@@ -72,14 +72,14 @@ namespace Expelibrum.UI.ViewModels
 
         private void AddTag()
         {
-            TagVMs.Add(new NameTagViewModel(TagVMs.Count, _ea));
-            _ea.PublishEvent("NameTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
+            TagVMs.Add(new DirectoryTagViewModel(TagVMs.Count, _ea));
+            _ea.PublishEvent("DirectoryTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         private void RemoveTag(int id)
         {
             TagVMs.RemoveAt(id);
-            _ea.PublishEvent("NameTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
+            _ea.PublishEvent("DirectoryTagCountChanged", new TagCountChangedEventArgs() { Count = TagVMs.Count });
         }
 
         #endregion
