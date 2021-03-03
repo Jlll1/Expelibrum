@@ -14,6 +14,8 @@ namespace Expelibrum.UI.ViewModels
 
         private IPDFUtils _pdfUtils;
         private IIsbnService _isbnService;
+        private ITagService _tagSerivce;
+        private IFileMoverService _fileMoverService;
 
         #endregion
 
@@ -33,31 +35,21 @@ namespace Expelibrum.UI.ViewModels
         private async void OnProcessFiles(object param)
         {
             var directory = new DirectoryInfo(DirectorySettings.OriginDirectoryPath);
+            var targetPath = DirectorySettings.TargetDirectoryPath;
             var searchOption = (SearchOption)Convert.ToInt32(DirectorySettings.IncludeSubdirectories);
+            IEnumerable<string> selectedTitleTags = NameTaggingViewModel.SelectedTags;
+            IEnumerable<string> selectedDirectoryTags = DirectoryTaggingViewModel.SelectedTags;
 
             foreach (var file in directory.GetFiles("*.pdf", searchOption))
             {
                 try
                 {
                     Book book = await GetBookFromFileAsync(file.FullName);
-
-                    var selectedTitleTags = NameTaggingViewModel.SelectedTags;
-                    var selectedDirectoryTags = DirectoryTaggingViewModel.SelectedTags;
-
-                    string title = GetFileName(selectedTitleTags, book);
-                    title = string.Join("-", title.Split(Path.GetInvalidFileNameChars()));
-                    string path = GetPath(selectedDirectoryTags, book);
-                    path = string.Join("-", path.Split(Path.GetInvalidFileNameChars()));
-
-                    string fullPath = Path.Combine(DirectorySettings.TargetDirectoryPath, path);
-                    Directory.CreateDirectory(fullPath);
-                    string fullTitle = title + ".pdf";
-                    Directory.Move(file.FullName, Path.Combine(fullPath, fullTitle));
+                    string fullPath = _tagSerivce.GetFullPath(selectedTitleTags, selectedDirectoryTags, book);
+                    _fileMoverService.Move(file.FullName, new string[] { targetPath, fullPath });
                 }
-                catch (InvalidOperationException)
-                {
-                    Directory.Move(file.FullName, Path.Combine(DirectorySettings.TargetDirectoryPath, file.Name));
-                }
+                catch 
+                { }
             }
         }
 
@@ -77,10 +69,14 @@ namespace Expelibrum.UI.ViewModels
             INameTaggingViewModel nameTaggingViewModel,
             IDirectoryTaggingViewModel directoryTaggingViewModel,
             IPDFUtils pdfUtils,
-            IIsbnService isbnService)
+            IIsbnService isbnService,
+            IFileMoverService fileMoverService,
+            ITagService tagService)
         {
             _pdfUtils = pdfUtils;
             _isbnService = isbnService;
+            _tagSerivce = tagService;
+            _fileMoverService = fileMoverService;
 
             DirectorySettings = directorySettingsViewModel;
             NameTaggingViewModel = nameTaggingViewModel;
@@ -97,42 +93,6 @@ namespace Expelibrum.UI.ViewModels
         {
             string isbn = _pdfUtils.GetIsbn(file);
             return await _isbnService.GetBookFromIsbn(isbn);
-        }
-
-        private string GetFileName(IEnumerable<string> selectedTags, Book book)
-        {
-            var tags = GetTags(selectedTags, book);
-
-            return String.Join("-", tags);
-        }
-
-        private string GetPath(IEnumerable<string> selectedTags, Book book)
-        {
-            var tags = GetTags(selectedTags, book);
-
-            return Path.Combine(tags.ToArray());
-        }
-
-        private List<string> GetTags(IEnumerable<string> selectedTags, Book book)
-        {
-            List<string> title = new List<string>();
-
-            foreach (var tag in selectedTags)
-            {
-                var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
-
-                if (selectedProperty.GetType().IsArray)
-                {
-                    var selectedArray = selectedProperty as dynamic[];
-                    title.Add(selectedArray[0].name);
-                }
-                else
-                {
-                    title.Add(selectedProperty as String);
-                }
-            }
-
-            return title;
         }
 
         #endregion
