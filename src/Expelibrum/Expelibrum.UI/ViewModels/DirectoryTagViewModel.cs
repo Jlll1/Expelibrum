@@ -18,5 +18,7 @@ namespace Expelibrum.UI.ViewModels
         {
             _ea.PublishEvent("DirectoryTagRemoveRequested", new TagRemoveRequestedEventArgs { Id = this.Id });
         }
+
+        protected override bool CanRemoveTag(object param) => true;
     }
 }

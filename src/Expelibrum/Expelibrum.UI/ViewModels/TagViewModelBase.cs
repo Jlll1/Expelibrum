@@ -39,7 +39,7 @@ namespace Expelibrum.UI.ViewModels
 
         #region commandmethods
 
-        private bool CanRemoveTag(object param)
+        protected virtual bool CanRemoveTag(object param)
         {
             return tagCount > 1;
         }
