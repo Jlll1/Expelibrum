@@ -36,7 +36,7 @@ namespace Expelibrum.Services
                         if (substring.Length >= 10)
                         {
                             substring = Regex.Replace(substring, @"[^0-9]", "");
-                            if (Int64.TryParse(substring, out _))
+                            if (Int64.TryParse(substring, out _) && substring.Length >= 10)
                             {
                                 return substring;
                             }
