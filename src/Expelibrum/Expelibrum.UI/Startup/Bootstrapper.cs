@@ -16,6 +16,7 @@ namespace Expelibrum.UI.Startup
             builder.RegisterType<PdfIsbnFinder>().As<IPDFUtils>();
             builder.RegisterType<TagService>().As<ITagService>();
             builder.RegisterType<FileMoverService>().As<IFileMoverService>();
+            builder.RegisterType<BookCache>().As<IBookCache>().SingleInstance();
 
             builder.RegisterType<FolderBrowserDialog>().As<IFolderBrowserDialog>();
 

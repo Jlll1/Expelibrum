@@ -1,15 +1,19 @@
 ﻿using Expelibrum.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Expelibrum.Services
 {
-    public class BookCache
+    public class BookCache : IBookCache
     {
-        private readonly Dictionary<string, Book> _books = new Dictionary<string, Book>();
+        private readonly string _cachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "books.json");
+        private Dictionary<string, Book> _books = new Dictionary<string, Book>();
 
         public BookCache()
         {
-            // TODO : Deserialize json
+            LoadCache();
         }
 
         public Book GetBook(string isbn)
@@ -27,11 +31,22 @@ namespace Expelibrum.Services
         public void UpdateBook(string isbn, Book book)
         {
             _books[isbn] = book;
+            SaveCache();
         }
 
-        public void SaveCacheToPath(string path)
+        private void SaveCache()
         {
-            //TODO: Serialize to json and save to file
+            JsonSerializer serializer = new JsonSerializer();
+            using (StreamWriter sw = new StreamWriter(_cachePath))
+            {
+                serializer.Serialize(sw, _books);
+            }
+        }
+
+        private void LoadCache()
+        {
+            if (File.Exists(_cachePath))
+                _books = JsonConvert.DeserializeObject<Dictionary<string, Book>>(File.ReadAllText(_cachePath));
         }
     }
 }
