@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Expelibrum.Services
 {
@@ -17,8 +18,13 @@ namespace Expelibrum.Services
                 );
         }
 
-        public string GetFileName(IEnumerable<string> tags, Book book)
+        private string GetFileName(IEnumerable<string> tags, Book book)
         {
+            if (!tags.Any())
+            {
+                throw new ArgumentException("fileTags cannot be empty");
+            }
+
             var processedTags = GetTags(tags, book);
 
             return String.Join('-', processedTags);
@@ -37,7 +43,16 @@ namespace Expelibrum.Services
 
             foreach (var tag in selectedTags)
             {
-                var selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
+                object selectedProperty;
+
+                try
+                {
+                    selectedProperty = typeof(Book).GetProperty(tag).GetValue(book);
+                }
+                catch(NullReferenceException)
+                {
+                    throw new ArgumentException("Provided tags don't match any property on the Book object");
+                }
 
                 if (selectedProperty.GetType().IsArray)
                 {
@@ -46,7 +61,7 @@ namespace Expelibrum.Services
                 }
                 else
                 {
-                    tags.Add(selectedProperty as String);
+                    tags.Add(selectedProperty.ToString());
                 }
             }
 
