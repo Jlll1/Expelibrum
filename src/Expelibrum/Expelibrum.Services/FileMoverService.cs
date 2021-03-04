@@ -1,8 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Expelibrum.Services
 {
+    /// <summary>
+    /// Implements <see cref="IFileMoverService"/>
+    /// </summary>
     public class FileMoverService : IFileMoverService
     {
         public void Move(string source, string[] destination)

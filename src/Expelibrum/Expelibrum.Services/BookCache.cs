@@ -6,6 +6,9 @@ using System.IO;
 
 namespace Expelibrum.Services
 {
+    /// <summary>
+    /// Implements <see cref="IBookCache"/>
+    /// </summary>
     public class BookCache : IBookCache
     {
         private readonly string _cachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "books.json");
@@ -16,6 +19,11 @@ namespace Expelibrum.Services
             LoadCache();
         }
 
+        /// <summary>
+        /// Retrieves an instance of Book object associated with given ISBN from the cache file
+        /// </summary>
+        /// <param name="isbn">ISBN number associated with book you want to retrieve</param>
+        /// <returns>Instance of a Book object if one is found, null otherwise</returns>
         public Book GetBook(string isbn)
         {
             if (!_books.ContainsKey(isbn))
@@ -28,6 +36,11 @@ namespace Expelibrum.Services
             }
         }
 
+        /// <summary>
+        /// Updates the Book object associated with given ISBN and stores it in the cache file
+        /// </summary>
+        /// <param name="isbn">ISBN number of the book you want to update</param>
+        /// <param name="book">Book object you want associate with the given ISBN</param>
         public void UpdateBook(string isbn, Book book)
         {
             _books[isbn] = book;

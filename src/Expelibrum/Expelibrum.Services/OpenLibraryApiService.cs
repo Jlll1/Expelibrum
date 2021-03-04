@@ -6,6 +6,9 @@ using Expelibrum.Model;
 
 namespace Expelibrum.Services
 {
+    /// <summary>
+    /// Implements <see cref="IIsbnService"/>
+    /// </summary>
     public class OpenLibraryApiService : IIsbnService
     {
         private const string ENDPOINT = @"https://openlibrary.org/api/books?bibkeys={0}&jscmd=data&format=json";
