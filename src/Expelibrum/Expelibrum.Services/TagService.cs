@@ -17,7 +17,7 @@ namespace Expelibrum.Services
                 );
         }
 
-        public string GetFileName(IEnumerable<string> tags, Book book)
+        private string GetFileName(IEnumerable<string> tags, Book book)
         {
             var processedTags = GetTags(tags, book);
 
