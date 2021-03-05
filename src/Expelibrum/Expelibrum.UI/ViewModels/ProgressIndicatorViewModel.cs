@@ -80,7 +80,6 @@ namespace Expelibrum.UI.ViewModels
             var args = e as ProcessingInitiatedEventArgs;
             Total = args.Total;
             ChangeStatus(true);
-
         }
         private void OnProcessingProgressChanged(EventArgs e)
         {
