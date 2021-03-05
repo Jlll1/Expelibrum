@@ -12,6 +12,7 @@
         <local:NameTaggingView DataContext="{Binding NameTaggingViewModel}"/>
         <local:NameTaggingView DataContext="{Binding DirectoryTaggingViewModel}"/>
         <Button Margin="10" Content="Process" Command="{Binding ProcessFilesCommand}"/>
-        
+        <local:ProgressIndicator DataContext="{Binding ProgressIndicatorViewModel}"/>
+
     </StackPanel>
 </UserControl>

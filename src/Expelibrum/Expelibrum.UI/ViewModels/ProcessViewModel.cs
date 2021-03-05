@@ -1,5 +1,7 @@
 ﻿using Expelibrum.Model;
 using Expelibrum.Services;
+using Expelibrum.Services.Events;
+using Expelibrum.UI.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +18,7 @@ namespace Expelibrum.UI.ViewModels
         private IIsbnService _isbnService;
         private ITagService _tagSerivce;
         private IFileMoverService _fileMoverService;
+        private IEventAggregator _ea;
 
         #endregion
 
@@ -24,6 +27,7 @@ namespace Expelibrum.UI.ViewModels
         public IDirectorySettingsViewModel DirectorySettings { get; }
         public INameTaggingViewModel NameTaggingViewModel { get; }
         public IDirectoryTaggingViewModel DirectoryTaggingViewModel { get; }
+        public IProgressIndicatorViewModel ProgressIndicatorViewModel { get; }
 
         #endregion
 
@@ -37,10 +41,17 @@ namespace Expelibrum.UI.ViewModels
             var directory = new DirectoryInfo(DirectorySettings.OriginDirectoryPath);
             var targetPath = DirectorySettings.TargetDirectoryPath;
             var searchOption = (SearchOption)Convert.ToInt32(DirectorySettings.IncludeSubdirectories);
+            var files = directory.GetFiles("*.pdf", searchOption);
             IEnumerable<string> selectedTitleTags = NameTaggingViewModel.SelectedTags;
             IEnumerable<string> selectedDirectoryTags = DirectoryTaggingViewModel.SelectedTags;
 
-            foreach (var file in directory.GetFiles("*.pdf", searchOption))
+            int filesProcessed = 0;
+            _ea.PublishEvent("ProcessingInitiated",
+                new ProcessingInitiatedEventArgs
+                {
+                    Total = files.Length
+                });
+            foreach (var file in files)
             {
                 try
                 {
@@ -50,6 +61,12 @@ namespace Expelibrum.UI.ViewModels
                 }
                 catch 
                 { }
+                filesProcessed++;
+                _ea.PublishEvent("ProcessingProgressChanged",
+                    new ProcessingProgressChangedEventArgs
+                    {
+                        Completed = filesProcessed
+                    });
             }
         }
 
@@ -68,19 +85,23 @@ namespace Expelibrum.UI.ViewModels
         public ProcessViewModel(IDirectorySettingsViewModel directorySettingsViewModel,
             INameTaggingViewModel nameTaggingViewModel,
             IDirectoryTaggingViewModel directoryTaggingViewModel,
+            IProgressIndicatorViewModel progressIndicatorViewModel,
             IPDFUtils pdfUtils,
             IIsbnService isbnService,
             IFileMoverService fileMoverService,
-            ITagService tagService)
+            ITagService tagService,
+            IEventAggregator ea)
         {
             _pdfUtils = pdfUtils;
             _isbnService = isbnService;
             _tagSerivce = tagService;
             _fileMoverService = fileMoverService;
+            _ea = ea;
 
             DirectorySettings = directorySettingsViewModel;
             NameTaggingViewModel = nameTaggingViewModel;
             DirectoryTaggingViewModel = directoryTaggingViewModel;
+            ProgressIndicatorViewModel = progressIndicatorViewModel;
 
             ProcessFilesCommand = new RelayCommand(OnProcessFiles, CanProcessFiles);
         }

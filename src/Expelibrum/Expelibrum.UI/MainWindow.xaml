@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Expelibrum.UI"
         xmlns:view="clr-namespace:Expelibrum.UI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="400" ResizeMode="NoResize">
+        Title="MainWindow" Height="600" Width="400" ResizeMode="NoResize">
     
     <Grid>
         <view:ProcessView DataContext="{Binding ProcessViewModel}"/>

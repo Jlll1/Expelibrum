@@ -28,6 +28,7 @@ namespace Expelibrum.UI.Startup
             builder.RegisterType<DirectorySettingsViewModel>().As<IDirectorySettingsViewModel>();
             builder.RegisterType<DirectoryTaggingViewModel>().As<IDirectoryTaggingViewModel>();
             builder.RegisterType<NameTaggingViewModel>().As<INameTaggingViewModel>();
+            builder.RegisterType<ProgressIndicatorViewModel>().As<IProgressIndicatorViewModel>();
 
             return builder.Build();
         }
